@@ -1,7 +1,37 @@
-.btn {
-  background-color: rgb(43, 12, 214);
+.button {
+  --buttonBackgroundColor: var(--colorHover);
+  --buttonIconColor: var(--colorSuccess);
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  background-color: transparent;
+  gap: 1rem;
+  border: none;
+  border-radius: 1rem;
+  width: 11.25rem;
+  height: 5.5rem;
+  cursor: pointer;  
+
+
+  &:hover {
+    background-color: var(--colorHover);
+  }
+  
+  &__icon {
+    width: 2.5rem;
+    height: 2.5rem;
+    cursor: pointer;
+    
+    &--success {
+      color: var(--colorSuccess);
+    }
+
+    &--dismiss {
+      color: var(--colorDismiss);
+    }
+  }
 
   &__text {
-    color: rgb(182, 34, 34);
+    color: #000;
   }
 }

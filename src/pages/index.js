@@ -1,7 +1,5 @@
 import { Button } from "#shared/ui/Button/index";
-import { CustomSelect } from "#shared/ui/CustomSelect/index";
-import { CinemaIcon } from "#shared/ui/Icons/index";
-import { Switch } from "#shared/ui/Switch/index";
+import { YesIcon, NoIcon } from "#shared/ui/Icons/index";
 
 /**
  * Страница приложения
@@ -21,55 +19,8 @@ const IndexPage = () => `
       </header>
       <main>
         <p>Hello world! 12</p>
-        ${Button({ text: "HI!" })}
-        ${Switch({
-          label: "Привет мир",
-          extraInputAttrs: [
-            { name: "name", value: "rememberMe" },
-            { name: "form", value: "formAuth" },
-          ],
-        })}
-        
-        ${CinemaIcon()}
-        ${Switch({
-          label: "Привет мир",
-          extraClasses: ["switch--isRightLabel"],
-          extraInputAttrs: [
-            { name: "name", value: "rememberMe" },
-            { name: "form", value: "formAuth" },
-          ],
-        })}
-
-        <div>${CustomSelect({
-          options: [
-            { label: "test", value: "1" },
-            { label: "new_test", value: "2" },
-          ],
-          cfg: {
-            searchEnabled: true,
-          },
-        })}</div>
-
-        <div>${CustomSelect({
-          options: [
-            { label: "test", value: "1" },
-            { label: "new_test", value: "2" },
-          ],
-          cfg: {
-            searchEnabled: true,
-          },
-        })}</div>
-
-        <div>${CustomSelect({
-          options: [
-            { label: "test", value: "1" },
-            { label: "new_test", value: "2" },
-          ],
-          cfg: {
-            searchEnabled: true,
-          },
-        })}</div>
-      </main>
+        ${Button({ text: "Да", icon: YesIcon(), extraClasses: ["button__icon--success"] })}
+        ${Button({ text: "Нет", icon: NoIcon(), extraClasses: ["button__icon--dismiss"] })}
     </body>
   </html>
 `;
