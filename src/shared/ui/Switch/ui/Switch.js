@@ -1,4 +1,5 @@
 import { getGeneratedAttrs } from "#shared/lib/utils";
+import { LocationIcon } from "#shared/ui/Icons/index";
 
 /**
  * Компонент свитч - кнопки
@@ -14,5 +15,6 @@ export const Switch = ({
               <span class="switch__label">${label}</span>
               <input type="checkbox" class="switch__input visuallyHidden" ${getGeneratedAttrs(extraInputAttrs)}>
               <span class="switch__slider"></span>
-          </label>`;
+          </label>
+          ${LocationIcon()}`;
 };
