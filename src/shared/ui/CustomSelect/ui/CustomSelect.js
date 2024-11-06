@@ -9,16 +9,12 @@ import { getGeneratedAttrs } from "#shared/lib/utils";
  * @return {string}
  */
 export const CustomSelect = ({
-  options = [],
-  placeholder = "Select an option",
-  extraClasses = [],
   extraAttrs = [],
   cfg = {},
+  extraClasses = [],
 } = {}) => {
   return `
-    <select data-js-custom-select=${JSON.stringify(cfg)} class="customSelect ${extraClasses.join(" ")}" ${getGeneratedAttrs(extraAttrs)}>
-        <option value="" disabled selected hidden>${placeholder}</option>
-        ${options.map((option) => `<option value="${option.value}">${option.label}</option>`).join("")}
+    <select data-js-custom-select='${JSON.stringify(cfg)}' class='customSelect ${extraClasses.join(" ")}' ${getGeneratedAttrs(extraAttrs)}>
     </select>
   `;
 };

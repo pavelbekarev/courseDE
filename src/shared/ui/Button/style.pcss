@@ -1,15 +1,20 @@
 .button {
   --buttonBackgroundColor: var(--colorHover);
-  --buttonIconColor: var(--colorSuccess);
+  --buttonWidth: 11.25rem;
+  --buttonHeight: 5.5rem;
+  --buttonPdBlock: 1.5rem;
+  --buttonPdInline: 2rem;
+  --buttonGap: 1rem;
+  --buttonIconWidth: 2.5rem;
+  --buttonIconHeight: 2.5rem;
   display: flex;
   align-items: center;
   justify-content: space-evenly;
   background-color: transparent;
-  gap: 1rem;
+  gap: var(--buttonGap);
   border: none;
-  border-radius: 1rem;
-  width: 11.25rem;
-  height: 5.5rem;
+  border-radius: var(--baseBorderRadius);
+  padding: var(--buttonPdBlock) var(--buttonPdInline);
   cursor: pointer;  
 
 
@@ -18,8 +23,8 @@
   }
   
   &__icon {
-    width: 2.5rem;
-    height: 2.5rem;
+    width: var(--buttonIconWidth);
+    height: var(--buttonIconHeight);
     cursor: pointer;
     
     &--success {

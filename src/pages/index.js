@@ -1,5 +1,12 @@
-import { Button } from "#shared/ui/Button/index";
-import { YesIcon, NoIcon } from "#shared/ui/Icons/index";
+import { CustomSelect } from "#shared/ui/CustomSelect/index.js";
+import {
+  BarIcon,
+  RestaurantIcon,
+  TheaterIcon,
+  CinemaIcon,
+  MusicIcon,
+} from "#shared/ui/Icons/index";
+import { SaveChanges } from "#widgets/ui/SaveChanges/index";
 
 /**
  * Страница приложения
@@ -19,8 +26,61 @@ const IndexPage = () => `
       </header>
       <main>
         <p>Hello world! 12</p>
-        ${Button({ text: "Да", icon: YesIcon(), extraClasses: ["button__icon--success"] })}
-        ${Button({ text: "Нет", icon: NoIcon(), extraClasses: ["button__icon--dismiss"] })}
+
+        <div>
+          ${SaveChanges()}
+        </div>
+        <div >
+          ${CustomSelect({
+            extraAttrs: [{ name: "id", value: "select-type-mark" }],
+            cfg: {
+              searchEnabled: false,
+              removeItemButton: true,
+              choices: [
+                {
+                  value: "Ресторан",
+                  label: "Ресторан",
+                  selected: true,
+                  customProperties: {
+                    icon: RestaurantIcon({ iconColor: "#FFB012" }),
+                  },
+                },
+                {
+                  value: "Бар",
+                  label: "Бар",
+                  selected: true,
+                  customProperties: {
+                    icon: BarIcon({ iconColor: "#f93639" }),
+                  },
+                },
+                {
+                  value: "Театр",
+                  label: "Театр",
+                  selected: true,
+                  customProperties: {
+                    icon: TheaterIcon({ iconColor: "#9747FF" }),
+                  },
+                },
+                {
+                  value: "Ночной клуб",
+                  label: "Ночной клуб",
+                  selected: true,
+                  customProperties: {
+                    icon: MusicIcon({ iconColor: "#33B8FF" }),
+                  },
+                },
+                {
+                  value: "Кино",
+                  label: "Кино",
+                  selected: true,
+                  customProperties: {
+                    icon: CinemaIcon({ iconColor: "#67BF55" }),
+                  },
+                },
+              ],
+            },
+          })}
+        </div>
     </body>
   </html>
 `;
