@@ -1,16 +1,15 @@
-import { StoreService } from "#shared/lib/services/StoreService";
-
 /**
  *
  */
 export class MapApp {
-  constructor(storageName) {
-    this.storeService = new StoreService(storageName);
+  constructor(storeService, apiClient) {
+    this.apiClient = apiClient;
+    this.storeService = storeService;
     this.subscribeForStoreService();
 
     setTimeout(() => {
       /* очистка фильтров */
-      this.storeService.updateStore("clearFilters");
+      // this.storeService.updateStore("clearFilters");
 
       /* добавление списка меток в Store */
       this.storeService.updateStore("addMarkersList", [
@@ -19,13 +18,15 @@ export class MapApp {
       ]);
 
       /* удаление списка меток из Store  */
-      this.storeService.updateStore("removeMarkersList", [
-        { id: 15, value: "text" },
-        { id: 16, value: "text" },
-      ]);
+      // this.storeService.updateStore("removeMarkersList", [
+      //   { id: 15, value: "text" },
+      //   { id: 16, value: "text" },
+      // ]);
 
       /* удаление метки из Store */
-      this.storeService.updateStore("removeMarker", 16);
+      // this.storeService.updateStore("removeMarker", 16);
+
+      this.getMarkersInfo();
     }, 3000);
   }
 
@@ -50,5 +51,11 @@ export class MapApp {
   unsubscribeFromStoreService() {
     this.markerSubscription?.();
     this.subscribeOnStoreChange?.();
+  }
+
+  getMarkersInfo() {
+    this.apiClient
+      .get(this.storeService.getMarkers())
+      .then((res) => console.debug(res));
   }
 }
