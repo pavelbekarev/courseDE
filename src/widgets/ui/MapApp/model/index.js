@@ -1,33 +1,29 @@
-/**
- *
- */
+import { YandexMap } from "#shared/ui/Map/model";
+
 export class MapApp {
   constructor(storeService, apiClient) {
     this.apiClient = apiClient;
     this.storeService = storeService;
+
+    this.yandexMap = new YandexMap({
+      containerSelector: "#map1",
+      apiUrl: "https://api-maps.yandex.ru/2.1/?apikey",
+      apiKey: "bac0a60d-665c-4bba-833c-e604ecaa227d",
+      lang: "ru_RU",
+      center: [55.751574, 37.573856],
+      zoom: 10,
+    });
+
+    this.yandexMap
+      .initMap()
+      .then((res) => {
+        console.debug("Карта инциализирована", res, this.yandexMap.instance);
+        this.yandexMap.addMark();
+      })
+      .catch((e) => console.error(e));
+
+    this.yandexMap.addMark();
     this.subscribeForStoreService();
-
-    setTimeout(() => {
-      /* очистка фильтров */
-      // this.storeService.updateStore("clearFilters");
-
-      /* добавление списка меток в Store */
-      this.storeService.updateStore("addMarkersList", [
-        { id: 15, value: "text" },
-        { id: 16, value: "text" },
-      ]);
-
-      /* удаление списка меток из Store  */
-      // this.storeService.updateStore("removeMarkersList", [
-      //   { id: 15, value: "text" },
-      //   { id: 16, value: "text" },
-      // ]);
-
-      /* удаление метки из Store */
-      // this.storeService.updateStore("removeMarker", 16);
-
-      this.getMarkersInfo();
-    }, 3000);
   }
 
   handleMarkersChanged() {
