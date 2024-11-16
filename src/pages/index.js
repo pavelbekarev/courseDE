@@ -6,7 +6,7 @@ import {
   CinemaIcon,
   MusicIcon,
 } from "#shared/ui/Icons/index";
-import { SaveChanges } from "#widgets/ui/SaveChanges/index";
+import { SaveChanges } from "#widgets/SaveChanges/index";
 
 /**
  * Страница приложения
@@ -81,7 +81,7 @@ const IndexPage = () => `
             },
           })}
         </div>
-        <div id="map1" style="width: 800px; aspect-ratio: 1 / 1"></div>
+        <div id="map1" class="yandexMap" style="width: 800px; aspect-ratio: 1 / 1"></div>
     </body>
   </html>
 `;

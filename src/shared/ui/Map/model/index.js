@@ -1,13 +1,26 @@
+import Swiper from "swiper";
+import {
+  iconsPresets,
+  classNames as defaultClassNames,
+  yandexMapCustomEventNames,
+  iconShageConfig as defaultIconShapeConfig,
+} from "../config/constants.js";
 import { checkMapInstance } from "../config/lib/checkMapInstance.js";
 import { getExternalScript } from "#shared/lib/utils/index";
+import { MapBallon } from "#shared/ui/MapBallon/index";
+/**
+ *
+ */
 export class YandexMap {
   constructor({
     containerSelector,
     apiKey,
-    center = [55.75, 37.57],
+    center = [45.751574, 37.573856],
     zoom = 10,
     lang = "ru_RU",
     apiUrl = "https://api-maps.yandex.ru/2.1/?apikey",
+    classNames,
+    iconShageConfig,
   }) {
     this.containerSelector = containerSelector;
     this.apiKey = apiKey;
@@ -16,6 +29,90 @@ export class YandexMap {
     this.lang = lang;
     this.apiUrl = apiUrl;
     this.instance = null;
+    this.iconsPresets = iconsPresets;
+    this.currentBalloon = null;
+    this.classNames = classNames ?? defaultClassNames;
+    this.iconShageConfig = iconShageConfig ?? defaultIconShapeConfig;
+  }
+
+  getBallonLayout() {
+    if (window.ymaps) {
+      const ballonLayout = window.ymaps.templateLayoutFactory.createClass(
+        `<div class="${this.classNames.ballonLayout}">$[[options.contentLayout observeSize]]</div>`,
+        {
+          build: function () {
+            this.constructor.superclass.build.call(this);
+          },
+          clear: function () {
+            this.constructor.superclass.clear.call(this);
+          },
+        }
+      );
+
+      return ballonLayout;
+    }
+
+    throw new Error("ymaps not ready");
+  }
+
+  createSwiper(ballonId) {
+    try {
+      const ballonContainer = document.querySelector(
+        `[data-js-ballon=${ballonId}`
+      );
+
+      // const swiperEl = ballonContainer.querySelector(".swiper");
+      // new Swiper(swiperEl, {
+      //   direction: "vertical",
+      //   loop: true,
+      //   pagination: {
+      //     el: ".swiper-pagination",
+      //     clickable: true,
+      //   },
+      //   navigation: {
+      //     nextEl: ".swiper-button-next",
+      //     prevEl: ".swiper-button-prev",
+      //   },
+      // });
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  getBallonContent({ id, children }) {
+    if (window.ymaps) {
+      const ballonContent = window.ymaps.templateLayoutFactory.createClass(
+        `<div class="${this.classNames.ballonContent}" data-js-ballon=${id}>
+          ${children}
+        </div>`,
+        {
+          build: function () {
+            ballonContent.superclass.build.call(this);
+            // this.createSwiper(ballonId); TODO: доделать swiper
+          },
+          clear: function () {
+            this.constructor.superclass.clear.call(this);
+          },
+        }
+      );
+
+      return ballonContent;
+    }
+
+    throw new Error("ymaps not ready");
+  }
+
+  getMarkerLayout(typeMarker) {
+    if (window.ymaps) {
+      const customLayout = window.ymaps.templateLayoutFactory.createClass(
+        `<div class="${this.classNames.mark}">
+           ${this.iconsPresets[typeMarker] ? this.iconsPresets[typeMarker] : typeMarker}
+         </div>`
+      );
+      return customLayout;
+    }
+
+    throw new Error("ymaps not ready");
   }
 
   #createMap() {
@@ -31,7 +128,7 @@ export class YandexMap {
         suppressMapOpenBlock: true,
       }
     );
-
+    this.#bindEvents();
     return this.instance;
   }
 
@@ -70,13 +167,92 @@ export class YandexMap {
   }
 
   @checkMapInstance
-  addMark() {
-    const myPlacemark = new window.ymaps.Placemark([55.7, 37.6], {
-      balloonContentHeader: "Однажды",
-      balloonContentBody: "В студеную зимнюю пору",
-      balloonContentFooter: "Мы пошли в гору",
-      hintContent: "Зимние происшествия",
+  addMark({ id, cords, type: typeMarker, onClick } = {}) {
+    const placemark = new window.ymaps.Placemark(
+      cords,
+      { id },
+      {
+        balloonLayout: this.getBallonLayout(),
+        balloonContentLayout: this.getBallonContent({
+          id,
+          children: "Загрузка...",
+        }),
+        hasBalloon: true,
+        iconLayout: this.getMarkerLayout(typeMarker),
+        iconShape: this.iconShageConfig,
+      }
+    );
+    placemark.events.add("click", (event) => {
+      if (onClick && typeof onClick === "function") onClick(id, event);
     });
-    this.instance.geoObjects.add(myPlacemark);
+
+    placemark.events.add("balloonopen", () => {
+      if (this.currentBalloon) {
+        this.currentBalloon.balloon.close();
+      }
+      this.currentBalloon = placemark;
+    });
+
+    placemark.events.add("balloonclose", () => {
+      this.currentBalloon = null;
+    });
+
+    this.instance.geoObjects.add(placemark);
+  }
+
+  handleMarkerClick(id, e, type) {
+    const targerPlacemark = e.get("target");
+
+    const customEvent = new CustomEvent(yandexMapCustomEventNames.markClicked, {
+      detail: {
+        id,
+        type,
+        mark: targerPlacemark,
+      },
+    });
+
+    document.dispatchEvent(customEvent);
+  }
+
+  renderCustomBallon(id, type, mark, info) {
+    mark.options.set(
+      "balloonContentLayout",
+      this.getBallonContent({
+        id,
+        children: `${info}`,
+      })
+    );
+  }
+
+  handleCloseCurrentBallon() {
+    if (this.currentBalloon) {
+      this.currentBalloon.balloon.close();
+    }
+    this.currentBalloon = null;
+  }
+
+  getLayoutContentForBallon(info, type) {
+    return MapBallon(info, type);
+  }
+
+  @checkMapInstance
+  renderMarks(marks) {
+    marks.forEach((mark) => {
+      this.addMark({
+        id: mark.id,
+        cords: mark.cords,
+        type: mark.type,
+        onClick: (id, e) => {
+          this.handleMarkerClick(id, e, mark.type);
+        },
+      });
+      console.debug(mark.type);
+    });
+  }
+
+  #bindEvents() {
+    this.instance.events.add("click", () => {
+      this.handleCloseCurrentBallon(); //TODO: а надо ли? надо подумать
+    });
   }
 }

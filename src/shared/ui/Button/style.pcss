@@ -9,14 +9,16 @@
   --buttonIconHeight: 2.5rem;
   display: flex;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: center;
   background-color: transparent;
-  gap: var(--buttonGap);
   border: none;
   border-radius: var(--baseBorderRadius);
   padding: var(--buttonPdBlock) var(--buttonPdInline);
   cursor: pointer;  
 
+  &--isText {
+    gap: var(--buttonGap);
+  }
 
   &:hover {
     background-color: var(--colorHover);

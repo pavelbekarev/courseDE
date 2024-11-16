@@ -1,10 +1,9 @@
-import "choices.js/public/assets/styles/choices.css";
 import "./styles.js";
-import { ApiClient } from "../shared/lib/services/ApiClient.js";
-import { MapApp } from "../widgets/ui/MapApp/model/index.js";
 import { API_URL } from "#shared/config/constants";
+import { ApiClient } from "#shared/lib/services/ApiClient.js";
 import { StoreService } from "#shared/lib/services/StoreService.js";
 import { ChoiceSelectModel } from "#shared/ui/CustomSelect/model/index.js";
+import { MapApp } from "#widgets/MapApp/model/index.js";
 
 async function initMSW() {
   if (process.env.NODE_ENV === "development") {

@@ -14,6 +14,7 @@ export const createStore = (storageName) => {
           markers: [],
           activeFilters: [],
           setMarkers: (markers) => set({ markers }),
+
           addMarker: (marker) => {
             set((state) => {
               const exist = state.markers.some((m) => m?.id === marker.id);
@@ -26,6 +27,7 @@ export const createStore = (storageName) => {
               };
             });
           },
+
           removeMarker: (markerId) => {
             set((state) => ({
               markers: state.markers.filter(
@@ -33,9 +35,11 @@ export const createStore = (storageName) => {
               ),
             }));
           },
+
           setFilters: (filters) => {
             set({ activeFilters: filters });
           },
+
           addFilter: (filter) => {
             set((state) => {
               const exist = state.activeFilters.some(
@@ -47,6 +51,7 @@ export const createStore = (storageName) => {
                 : { activeFilters: [...state.activeFilters, filter] };
             });
           },
+
           clearFilters: () => {
             set({ activeFilters: [] });
           },
