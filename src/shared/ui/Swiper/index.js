@@ -1,1 +1,1 @@
-export { Swiper } from "./ui/Swiper.js";
+export { renderSwiper } from "./ui/renderSwiper.js";

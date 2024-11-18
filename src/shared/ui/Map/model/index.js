@@ -8,6 +8,7 @@ import {
 import { checkMapInstance } from "../config/lib/checkMapInstance.js";
 import { getExternalScript } from "#shared/lib/utils/index";
 import { MapBallon } from "#shared/ui/MapBallon/index";
+import { CustomSwiper } from "#shared/ui/Swiper/model/index.js";
 /**
  *
  */
@@ -53,30 +54,6 @@ export class YandexMap {
     }
 
     throw new Error("ymaps not ready");
-  }
-
-  createSwiper(ballonId) {
-    try {
-      const ballonContainer = document.querySelector(
-        `[data-js-ballon=${ballonId}`
-      );
-
-      // const swiperEl = ballonContainer.querySelector(".swiper");
-      // new Swiper(swiperEl, {
-      //   direction: "vertical",
-      //   loop: true,
-      //   pagination: {
-      //     el: ".swiper-pagination",
-      //     clickable: true,
-      //   },
-      //   navigation: {
-      //     nextEl: ".swiper-button-next",
-      //     prevEl: ".swiper-button-prev",
-      //   },
-      // });
-    } catch (e) {
-      console.error(e);
-    }
   }
 
   getBallonContent({ id, children }) {

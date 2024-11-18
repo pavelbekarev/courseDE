@@ -8,8 +8,8 @@ export const listMarksMockResponse = {
   ],
 };
 
-export const markDetail = {
-  ["1"]: {
+export const markDetail = [
+  {
     id: "1",
     title: "Al Capone",
     type: "Bar",
@@ -21,13 +21,13 @@ export const markDetail = {
     comment:
       "Хороший бар и караоке, по средам у них специальные акции с коктейлями",
     images: [
-      "/images/image1.png",
-      "/images/image2.png",
-      "/images/image3.png",
-      "/images/image4.png",
+      "/assets/marksDetail/image1.png",
+      "/assets/marksDetail/image2.png",
+      "/assets/marksDetail/image3.png",
+      "/assets/marksDetail/image4.png",
     ],
   },
-  ["2"]: {
+  {
     id: "2",
     title: "Al Capone Bistro",
     type: "Restaurant",
@@ -39,13 +39,13 @@ export const markDetail = {
     comment:
       "Идеальное место для романтического ужина. В меню представлены блюда международной кухни и авторские коктейли.",
     images: [
-      "/images/image1.png",
-      "/images/image2.png",
-      "/images/image3.png",
-      "/images/image4.png",
+      "assets/marksDetail/image1.png",
+      "assets/marksDetail/image2.png",
+      "assets/marksDetail/image3.png",
+      "assets/marksDetail/image4.png",
     ],
   },
-  ["3"]: {
+  {
     id: "3",
     title: "Al Capone Cinema",
     type: "Cinema",
@@ -57,13 +57,13 @@ export const markDetail = {
     comment:
       "Современный кинотеатр с комфортными креслами и разнообразием фильмов. Каждый вторник - специальные цены на билеты!",
     images: [
-      "/images/image1.png",
-      "/images/image2.png",
-      "/images/image3.png",
-      "/images/image4.png",
+      "/assets/marksDetail/image1.png",
+      "/assets/marksDetail/image2.png",
+      "/assets/marksDetail/image3.png",
+      "/assets/marksDetail/image4.png",
     ],
   },
-  ["4"]: {
+  {
     id: "4",
     title: "Театр «Капоне»",
     type: "Theater",
@@ -75,13 +75,13 @@ export const markDetail = {
     comment:
       "Неповторимые спектакли и вечера живой музыки. Откройте для себя искусство в уютной обстановке.",
     images: [
-      "/images/image1.png",
-      "/images/image2.png",
-      "/images/image3.png",
-      "/images/image4.png",
+      "/assets/marksDetail/image1.png",
+      "/assets/marksDetail/image2.png",
+      "/assets/marksDetail/image3.png",
+      "/assets/marksDetail/image4.png",
     ],
   },
-  ["5"]: {
+  {
     id: "5",
     title: "Al Capone Night Club",
     type: "Music",
@@ -93,10 +93,10 @@ export const markDetail = {
     comment:
       "Ночной клуб с жаркими танцами и лучших DJ. Каждую субботу – грандиозные вечеринки с сюрпризами!",
     images: [
-      "/images/image1.png",
-      "/images/image2.png",
-      "/images/image3.png",
-      "/images/image4.png",
+      "/assets/marksDetail/image1.png",
+      "/assets/marksDetail/image2.png",
+      "/assets/marksDetail/image3.png",
+      "/assets/marksDetail/image4.png",
     ],
   },
-};
+];
