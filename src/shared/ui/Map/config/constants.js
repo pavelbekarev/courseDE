@@ -12,7 +12,7 @@ export const classNames = {
   mark: "yandexMap__mark",
 };
 
-export const iconShageConfig = {
+export const iconShapeConfig = {
   type: "Circle",
   coordinates: [0, 0],
   radius: 88,

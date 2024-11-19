@@ -1,14 +1,12 @@
-import Swiper from "swiper";
 import {
   iconsPresets,
   classNames as defaultClassNames,
   yandexMapCustomEventNames,
-  iconShageConfig as defaultIconShapeConfig,
+  iconShapeConfig as defaultIconShapeConfig,
 } from "../config/constants.js";
 import { checkMapInstance } from "../config/lib/checkMapInstance.js";
 import { getExternalScript } from "#shared/lib/utils/index";
 import { MapBallon } from "#shared/ui/MapBallon/index";
-import { CustomSwiper } from "#shared/ui/Swiper/model/index.js";
 /**
  *
  */
@@ -21,7 +19,7 @@ export class YandexMap {
     lang = "ru_RU",
     apiUrl = "https://api-maps.yandex.ru/2.1/?apikey",
     classNames,
-    iconShageConfig,
+    iconShapeConfig,
   }) {
     this.containerSelector = containerSelector;
     this.apiKey = apiKey;
@@ -33,7 +31,7 @@ export class YandexMap {
     this.iconsPresets = iconsPresets;
     this.currentBalloon = null;
     this.classNames = classNames ?? defaultClassNames;
-    this.iconShageConfig = iconShageConfig ?? defaultIconShapeConfig;
+    this.iconShageConfig = iconShapeConfig ?? defaultIconShapeConfig;
   }
 
   getBallonLayout() {

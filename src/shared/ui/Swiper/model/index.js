@@ -14,11 +14,6 @@ export class CustomSwiper {
     pagination,
   }) {
     const container = document.querySelector(containerSelector);
-    if (!(container instanceof HTMLElement)) {
-      throw new Error(
-        `Элемент с селектором "${containerSelector}" не является DOM-элементом.`
-      );
-    }
 
     this.container = container; // Сохраняем DOM-элемент
     this.sliderImages = sliderImages;
@@ -38,7 +33,7 @@ export class CustomSwiper {
       return;
     }
 
-    this.instance = new Swiper(this.container, {
+    this.instance = new Swiper(this.container.querySelector(".swiper"), {
       direction: this.direction,
       loop: this.loop,
       navigation: this.navigation,
@@ -50,7 +45,7 @@ export class CustomSwiper {
    * Генерация HTML для слайдера
    * @return {string} HTML-шаблон
    */
-  renderCustomSwiper() {
+  getLayoutForCustomSwiper() {
     return `
       <div class="swiper">
         <div class="swiper-wrapper">
@@ -62,8 +57,6 @@ export class CustomSwiper {
           )}
         </div>
         <div class="swiper-pagination"></div>
-        <div class="swiper-button-next"></div>
-        <div class="swiper-button-prev"></div>
       </div>
     `;
   }

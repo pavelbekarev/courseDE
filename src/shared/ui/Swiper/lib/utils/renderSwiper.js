@@ -1,5 +1,5 @@
-import { CustomSwiper } from "../model/index.js";
 import "swiper/css/bundle";
+import { CustomSwiper } from "#shared/ui/Swiper/model";
 
 /**
  * Рендер и инициализация Swiper
@@ -9,19 +9,6 @@ import "swiper/css/bundle";
  */
 export const renderSwiper = (containerSelector, images, options) => {
   const container = document.querySelector(containerSelector);
-  if (!(container instanceof HTMLElement)) {
-    console.error(
-      `Элемент с селектором "${containerSelector}" не найден или не является DOM-элементом.`
-    );
-    return;
-  }
-
-  const temp = {
-    direction: options.direction,
-    loop: options.loop,
-    navigation: options.navigation,
-    pagination: options.pagination,
-  };
 
   setTimeout(() => {
     console.debug(typeof containerSelector);
@@ -35,7 +22,7 @@ export const renderSwiper = (containerSelector, images, options) => {
   });
 
   // Вставляем HTML в контейнер
-  container.innerHTML = swiperInstance.renderCustomSwiper();
+  container.innerHTML = swiperInstance.getLayoutForCustomSwiper();
 
   // Инициализируем Swiper
   swiperInstance.initSwiper();

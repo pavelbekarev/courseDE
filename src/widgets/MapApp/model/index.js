@@ -44,13 +44,8 @@ export class MapApp {
       detail: { id, type, mark },
     } = e;
 
-    console.debug("type", type);
-    console.debug("mark", mark);
-
     try {
-      console.debug("id до", typeof id);
       const res = await this.apiClient.get(API_ENDPOINTS.marks.detail, id);
-      console.debug("res.id: ", res.data.id);
 
       const layout = this.yandexMap.getLayoutContentForBallon(res, type);
 
