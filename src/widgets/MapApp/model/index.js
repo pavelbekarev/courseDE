@@ -1,6 +1,7 @@
 import { API_ENDPOINTS } from "#shared/config/constants";
 import { yandexMapCustomEventNames } from "#shared/ui/Map/config/constants";
 import { YandexMap } from "#shared/ui/Map/model";
+import { MapBallon } from "#shared/ui/MapBallon/ui/MapBallon";
 
 /**
  *
@@ -47,11 +48,10 @@ export class MapApp {
     try {
       const res = await this.apiClient.get(API_ENDPOINTS.marks.detail, id);
 
-      const layout = this.yandexMap.getLayoutContentForBallon(res, type);
-
-      this.yandexMap.renderCustomBallon(id, type, mark, layout);
+      const layout = MapBallon({ ballonId: id, type: type, info: res });
+      this.yandexMap.updateCustomBallon(id, mark, layout);
     } catch (e) {
-      console.error(e);
+      console.debug(e);
     }
   }
 

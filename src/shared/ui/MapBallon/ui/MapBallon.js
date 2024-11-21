@@ -1,30 +1,26 @@
+import { getLayoutForCustomSwiper } from "../lib/index.js";
 import { Button } from "#shared/ui/Button/index";
 import { EditIcon, DeleteIcon } from "#shared/ui/Icons/index";
 import { iconsPresets, typeNamesRus } from "#shared/ui/Map/config/constants.js";
-import { renderSwiper } from "#shared/ui/Swiper/lib/utils/renderSwiper";
-
 import { Title } from "#shared/ui/Title/ui/Title";
 import "swiper/css/bundle";
 /**
  *
  */
-export const MapBallon = (info, type, extraClasses = [], extraAttrs = []) => {
+export const MapBallon = ({
+  ballonId,
+  info,
+  type,
+  extraClasses = [],
+  extraAttrs = [],
+}) => {
   const typeNameRus = typeNamesRus[type];
   const typeIcon = iconsPresets[type];
 
-  setTimeout(() => {
-    renderSwiper(".swiper", info.data.images, {
-      direction: "horizontal",
-      loop: true,
-      pagination: {
-        el: ".swiper-pagination",
-        clickable: true,
-      },
-    });
-  }, 0);
+  const customSwiperLayout = getLayoutForCustomSwiper({ info: info });
 
   return `
-    <div class="swiper"></div>
+    ${customSwiperLayout}
     ${Title({ text: info.data.title, extraClasses: ["yandexMap__ballonContent__title"] })}
 
     <div class="yandexMap__ballonContent__typeContainer">

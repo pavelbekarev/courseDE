@@ -1,3 +1,5 @@
+import Swiper from "swiper";
+import { Pagination, Navigation } from "swiper/modules";
 import {
   iconsPresets,
   classNames as defaultClassNames,
@@ -6,7 +8,6 @@ import {
 } from "../config/constants.js";
 import { checkMapInstance } from "../config/lib/checkMapInstance.js";
 import { getExternalScript } from "#shared/lib/utils/index";
-import { MapBallon } from "#shared/ui/MapBallon/index";
 /**
  *
  */
@@ -56,6 +57,7 @@ export class YandexMap {
 
   getBallonContent({ id, children }) {
     if (window.ymaps) {
+      const linkCreateSwiperFn = this.createSwiperForBallon;
       const ballonContent = window.ymaps.templateLayoutFactory.createClass(
         `<div class="${this.classNames.ballonContent}" data-js-ballon=${id}>
           ${children}
@@ -63,7 +65,7 @@ export class YandexMap {
         {
           build: function () {
             ballonContent.superclass.build.call(this);
-            // this.createSwiper(ballonId); TODO: доделать swiper
+            linkCreateSwiperFn(id);
           },
           clear: function () {
             this.constructor.superclass.clear.call(this);
@@ -75,6 +77,34 @@ export class YandexMap {
     }
 
     throw new Error("ymaps not ready");
+  }
+
+  createSwiperForBallon(ballonId) {
+    try {
+      const ballonContainer = document.querySelector(
+        `[data-js-ballon="${ballonId}"]`
+      );
+
+      console.debug(ballonContainer);
+
+      const swiperEl = ballonContainer.querySelector(".swiper");
+      const swiperPagination =
+        ballonContainer.querySelector(".swiper-pagination");
+
+      if (swiperEl && swiperPagination) {
+        new Swiper(swiperEl, {
+          slidesPerView: 1,
+          direction: "horizontal",
+          modules: [Pagination],
+          pagination: {
+            el: swiperPagination,
+            clickable: true,
+          },
+        });
+      }
+    } catch (e) {
+      console.error(e);
+    }
   }
 
   getMarkerLayout(typeMarker) {
@@ -189,7 +219,7 @@ export class YandexMap {
     document.dispatchEvent(customEvent);
   }
 
-  renderCustomBallon(id, type, mark, info) {
+  updateCustomBallon(id, mark, info) {
     mark.options.set(
       "balloonContentLayout",
       this.getBallonContent({
@@ -204,10 +234,6 @@ export class YandexMap {
       this.currentBalloon.balloon.close();
     }
     this.currentBalloon = null;
-  }
-
-  getLayoutContentForBallon(info, type) {
-    return MapBallon(info, type);
   }
 
   @checkMapInstance

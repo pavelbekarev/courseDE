@@ -25,6 +25,8 @@ export const markDetail = [
       "/assets/marksDetail/image2.png",
       "/assets/marksDetail/image3.png",
       "/assets/marksDetail/image4.png",
+      "/assets/marksDetail/image5.png",
+      "/assets/marksDetail/image6.png",
     ],
   },
   {
@@ -43,6 +45,8 @@ export const markDetail = [
       "assets/marksDetail/image2.png",
       "assets/marksDetail/image3.png",
       "assets/marksDetail/image4.png",
+      "/assets/marksDetail/image5.png",
+      "/assets/marksDetail/image6.png",
     ],
   },
   {
@@ -61,6 +65,8 @@ export const markDetail = [
       "/assets/marksDetail/image2.png",
       "/assets/marksDetail/image3.png",
       "/assets/marksDetail/image4.png",
+      "/assets/marksDetail/image5.png",
+      "/assets/marksDetail/image6.png",
     ],
   },
   {
@@ -79,6 +85,8 @@ export const markDetail = [
       "/assets/marksDetail/image2.png",
       "/assets/marksDetail/image3.png",
       "/assets/marksDetail/image4.png",
+      "/assets/marksDetail/image5.png",
+      "/assets/marksDetail/image6.png",
     ],
   },
   {
