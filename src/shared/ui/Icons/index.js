@@ -1,4 +1,5 @@
 export { BarIcon } from "./ui/BarIcon.js";
+export { CenterMarkerIcon } from "./ui/CenterMarkerIcon.js";
 export { CinemaIcon } from "./ui/CinemaIcon.js";
 export { CloseDefaultIcon } from "./ui/CloseDefaultIcon.js";
 export { CloseHoverIcon } from "./ui/CloseHoverIcon.js";

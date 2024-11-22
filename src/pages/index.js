@@ -6,6 +6,7 @@ import {
   CinemaIcon,
   MusicIcon,
 } from "#shared/ui/Icons/index";
+import { Switch } from "#shared/ui/Switch/index.js";
 import { SaveChanges } from "#widgets/SaveChanges/index";
 
 /**
@@ -26,6 +27,18 @@ const IndexPage = () => `
       </header>
       <main>
         <p>Hello world! 12</p>
+
+        <div class="isFlex mb16 gap8">
+          ${Switch({
+            label: "Привет мир",
+            extraClasses: ["switch--isRightLabel"],
+            extraInputAttrs: [
+              { name: "name", value: "rememberMe" },
+              { name: "form", value: "formAuth" },
+              { name: "checked", value: "true" },
+            ],
+          })}
+        </div>
 
         <div>
           ${SaveChanges()}

@@ -19,6 +19,8 @@ export class StoreService {
       /* добавление фильтра в Store */
       addFilter: (payload) => this.store.getState().addFilter(payload),
 
+      setFilters: (payload) => this.store.getState().setFilters(payload),
+
       /* очистка фильтров */
       clearFilters: () => this.store.getState().clearFilters(),
 

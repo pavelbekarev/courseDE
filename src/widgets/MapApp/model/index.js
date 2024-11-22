@@ -1,5 +1,6 @@
 import { API_ENDPOINTS } from "#shared/config/constants";
 import { getDebouncedFn } from "#shared/lib/utils/index";
+import { FilterManager } from "#shared/ui/Filter/model/index.js";
 import { yandexMapCustomEventNames } from "#shared/ui/Map/config/constants";
 import { YandexMap } from "#shared/ui/Map/model";
 import { MapBallon } from "#shared/ui/MapBallon/ui/MapBallon";
@@ -15,13 +16,24 @@ export class MapApp {
     this.inputAddress = document.querySelector("#searchAddress"); //TODO: вынести в фильтр.
     console.debug(this.inputAddress, "!!!");
 
+    this.debouncedHandleMapByAddress = getDebouncedFn(
+      this.handleCenterMapByAddress,
+      1000
+    ).bind(this);
+
     this.yandexMap = new YandexMap({
       containerSelector: "#map1",
       apiUrl: "https://api-maps.yandex.ru/2.1/?apikey",
-      apiKey: "bac0a60d-665c-4bba-833c-e604ecaa227d",
+      apiKey: this.apiKey,
       lang: "ru_RU",
       center: [53.5, 53.9],
       zoom: 10,
+    });
+
+    this.loadAndUpdateFilters(); //подгружаем инфу по конфигу фильтров
+    this.filterManager = new FilterManager({
+      containerSelector: `[data-js-filter="1"]`,
+      onUpdate: this.handleFilterChanged,
     });
 
     this.yandexMap
@@ -29,7 +41,6 @@ export class MapApp {
       .then(async () => {
         this.yandexMap.renderMarks(this.storeService.getMarkers()); //Рендерим метки из стора
         const marks = await this.getMarks();
-        console.debug(marks);
         this.storeService.updateStore("setMarkers", marks);
       })
       .catch((e) => console.error(e));
@@ -37,6 +48,31 @@ export class MapApp {
     this.#bindYandexMapEvents();
     this.subscribeForStoreService();
     this.#bindEvents();
+  }
+
+  handleFilterChanged(changeData) {
+    console.debug(
+      "Здесь я буду обращаться к стору и обновлять его данные активных фильтров",
+      changeData
+    );
+  }
+
+  loadAndUpdateFilters() {
+    (async () => {
+      try {
+        const filters = await this.getFiltersCfg();
+        this.storeService.updateStore("setFilters", filters);
+        this.filterManager.applyFilters(filters);
+      } catch (error) {
+        console.error("Ошибка при получении конфигурации фильтров:", error);
+      }
+    })();
+  }
+
+  async getFiltersCfg() {
+    return this.apiClient
+      .get(API_ENDPOINTS.config.list)
+      .then((res) => res?.data);
   }
 
   async getMarks() {
@@ -60,21 +96,21 @@ export class MapApp {
     }
   }
 
-  handleMarkersChanged() {
+  handleMarkersChangedInStore() {
     console.debug("markers changed", this.storeService.getMarkers());
     this.yandexMap.renderMarks(this.storeService.getMarkers());
   }
 
-  handleFiltersChanged() {
+  handleFiltersChangedInStore() {
     console.debug("filters changed", this.storeService.getFilters());
   }
 
   subscribeForStoreService() {
     this.markerSubscription = this.storeService.subscribeToMarkers(() => {
-      this.handleMarkersChanged();
+      this.handleMarkersChangedInStore();
     });
     this.fitlerSubscription = this.storeService.subscribeToFilters(() => {
-      this.handleFiltersChanged();
+      this.handleFiltersChangedInStore();
     });
   }
 
@@ -84,14 +120,6 @@ export class MapApp {
   }
 
   handleCenterMapByAddress(address) {
-    console.debug(address, "address");
-    //TODO: как-то проверять что yandexMap и переписать на apiClient (добавить параметр ingoreBaseUrl)
-    // this.apiClient.get(this.apiGeoUrl, {
-    //   apikey: this.apiKey,
-    //   geocode: encodeURIComponent(address),
-    //   format: "json",
-    // });
-
     fetch(
       `${this.apiGeoUrl}=${this.apiKey}&geocode=${encodeURIComponent(address)}&format=json`
     )
@@ -121,13 +149,9 @@ export class MapApp {
 
   //TODO: переписать на фильтры
   #bindEvents() {
-    const debouncedHandleMapByAddress = getDebouncedFn(
-      this.handleCenterMapByAddress,
-      1000
-    ).bind(this);
     if (this.inputAddress)
       this.inputAddress.addEventListener("input", (e) => {
-        debouncedHandleMapByAddress(e.target.value);
+        this.debouncedHandleMapByAddress(e.target.value);
       });
   }
 }

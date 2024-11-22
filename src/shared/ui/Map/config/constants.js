@@ -4,12 +4,14 @@ import {
   RestaurantIcon,
   TheaterIcon,
   CinemaIcon,
+  CenterMarkerIcon,
 } from "#shared/ui/Icons/index";
 
 export const classNames = {
   ballonContent: "yandexMap__ballonContent",
   ballonLayout: "yandexMap__ballonLayout",
   mark: "yandexMap__mark",
+  centerMarker: "yandexMap__centerMarker",
 };
 
 export const iconShapeConfig = {
@@ -19,11 +21,12 @@ export const iconShapeConfig = {
 };
 
 export const iconsPresets = {
-  ["Bar"]: BarIcon({ iconColor: "var(--colorRed)" }),
-  ["Music"]: MusicIcon({ iconColor: "var(--colorPictonBlue)" }),
-  ["Restaurant"]: RestaurantIcon({ iconColor: "var(--colorOrange)" }),
-  ["Theater"]: TheaterIcon({ iconColor: "var(--colorVeronica)" }),
-  ["Cinema"]: CinemaIcon({ iconColor: "var(--colorMantis)" }),
+  Bar: BarIcon({ iconColor: "var(--colorRed)" }),
+  Music: MusicIcon({ iconColor: "var(--colorPictonBlue)" }),
+  Restaurant: RestaurantIcon({ iconColor: "var(--colorOrange)" }),
+  Theater: TheaterIcon({ iconColor: "var(--colorVeronica)" }),
+  Cinema: CinemaIcon({ iconColor: "var(--colorMantis)" }),
+  centerMarker: CenterMarkerIcon({ iconColor: "var(--colorGray  )" }),
 };
 
 export const typeNamesRus = {

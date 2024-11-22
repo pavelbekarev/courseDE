@@ -30,8 +30,8 @@ export class YandexMap {
     this.lang = lang;
     this.apiUrl = apiUrl;
     this.instance = null;
+    this.centerMarker = null; // Центральная иконка на карте
     this.iconsPresets = iconsPresets;
-    this.currentBalloon = null;
     this.classNames = classNames ?? defaultClassNames;
     this.iconShageConfig = iconShapeConfig ?? defaultIconShapeConfig;
   }
@@ -110,9 +110,10 @@ export class YandexMap {
 
   getMarkerLayout(typeMarker) {
     if (window.ymaps) {
+      console.debug(typeMarker);
       const customLayout = window.ymaps.templateLayoutFactory.createClass(
         `<div class="${this.classNames.mark}">
-           ${this.iconsPresets[typeMarker] ? this.iconsPresets[typeMarker] : typeMarker}
+          ${this.iconsPresets[typeMarker] ? this.iconsPresets[typeMarker] : typeMarker}
          </div>`
       );
       return customLayout;
@@ -134,6 +135,7 @@ export class YandexMap {
         suppressMapOpenBlock: true,
       }
     );
+    this.addCenterMarker();
     this.#bindEvents();
     return this.instance;
   }
@@ -186,21 +188,15 @@ export class YandexMap {
         hasBalloon: true,
         iconLayout: this.getMarkerLayout(typeMarker),
         iconShape: this.iconShageConfig,
+        hideIconOnBalloonOpen: false,
       }
     );
+
     placemark.events.add("click", (event) => {
-      if (onClick && typeof onClick === "function") onClick(id, event);
-    });
-
-    placemark.events.add("balloonopen", () => {
-      if (this.currentBalloon) {
-        this.currentBalloon.balloon.close();
+      if (this.instance.balloon.isOpen()) {
+        return;
       }
-      this.currentBalloon = placemark;
-    });
-
-    placemark.events.add("balloonclose", () => {
-      this.currentBalloon = null;
+      if (onClick && typeof onClick === "function") onClick(id, event);
     });
 
     this.instance.geoObjects.add(placemark);
@@ -228,13 +224,6 @@ export class YandexMap {
         children: `${info}`,
       })
     );
-  }
-
-  handleCloseCurrentBallon() {
-    if (this.currentBalloon) {
-      this.currentBalloon.balloon.close();
-    }
-    this.currentBalloon = null;
   }
 
   @checkMapInstance
@@ -271,13 +260,12 @@ export class YandexMap {
           this.handleMarkerClick(id, e, mark.type);
         },
       });
-      console.debug(mark.type);
     });
   }
 
   #bindEvents() {
-    this.instance.events.add("click", () => {
-      this.handleCloseCurrentBallon(); //TODO: а надо ли? надо подумать
+    this.instance.events.add("click", (e) => {
+      this.instance.balloon.close();
     });
   }
 }
