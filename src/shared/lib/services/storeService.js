@@ -7,6 +7,9 @@ export class StoreService {
   constructor(storageName) {
     this.store = createStore(storageName);
     this.actionMap = {
+      /* обновить маркеры */
+      setMarkers: (payload) => this.store.getState().setMarkers(payload),
+
       /* добавлеие маркера в Store */
       addMarker: (payload) => this.store.getState().addMarker(payload),
 

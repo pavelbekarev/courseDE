@@ -30,12 +30,13 @@ const IndexPage = () => `
         <div>
           ${SaveChanges()}
         </div>
-        <div >
+        <div style="max-width: 279px">
           ${CustomSelect({
             extraAttrs: [{ name: "id", value: "select-type-mark" }],
             cfg: {
+              preset: "default",
               searchEnabled: false,
-              removeItemButton: true,
+              itemSelectText: "",
               choices: [
                 {
                   value: "Ресторан",
@@ -82,6 +83,7 @@ const IndexPage = () => `
           })}
         </div>
         <div id="map1" class="yandexMap" style="width: 800px; aspect-ratio: 1 / 1"></div>
+        <input type="text" id="searchAddress"/>
     </body>
   </html>
 `;

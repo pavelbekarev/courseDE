@@ -1,3 +1,38 @@
+export const filterCfg = {
+  inputs: {
+    search: {
+      value: null,
+      isChecked: "null",
+      isDisabled: "null",
+    },
+    bars: {
+      value: null,
+      isChecked: false,
+      isDisabled: false,
+    },
+    restaurant: {
+      value: null,
+      isChecked: false,
+      isDisabled: false,
+    },
+    trk: {
+      value: null,
+      isChecked: false,
+      isDisabled: false,
+    },
+    theatre: {
+      value: null,
+      isChecked: false,
+      isDisabled: false,
+    },
+    cinema: {
+      value: null,
+      isChecked: false,
+      isDisabled: false,
+    },
+  },
+};
+
 export const listMarksMockResponse = {
   marks: [
     { id: "1", type: "Bar", cords: [53.5, 60.9] },
@@ -8,7 +43,7 @@ export const listMarksMockResponse = {
   ],
 };
 
-export const markDetail = [
+export const marksDetailMockResponse = [
   {
     id: "1",
     title: "Al Capone",

@@ -1,5 +1,5 @@
 import Swiper from "swiper";
-import { Pagination, Navigation } from "swiper/modules";
+import { Pagination } from "swiper/modules";
 import {
   iconsPresets,
   classNames as defaultClassNames,
@@ -23,6 +23,7 @@ export class YandexMap {
     iconShapeConfig,
   }) {
     this.containerSelector = containerSelector;
+    this.containerMap = document.querySelector(this.containerSelector);
     this.apiKey = apiKey;
     this.center = center;
     this.zoom = zoom;
@@ -122,7 +123,7 @@ export class YandexMap {
 
   #createMap() {
     this.instance = new window.ymaps.Map(
-      document.querySelector(this.containerSelector),
+      this.containerMap,
       {
         center: this.center,
         zoom: this.zoom,
@@ -216,7 +217,7 @@ export class YandexMap {
       },
     });
 
-    document.dispatchEvent(customEvent);
+    this.containerMap.dispatchEvent(customEvent);
   }
 
   updateCustomBallon(id, mark, info) {
@@ -234,6 +235,29 @@ export class YandexMap {
       this.currentBalloon.balloon.close();
     }
     this.currentBalloon = null;
+  }
+
+  @checkMapInstance
+  addCenterMarker() {
+    try {
+      const centerMarker = document.createElement("div");
+      centerMarker.className = this.classNames["centerMarker"];
+      centerMarker.innerHTML = this.iconsPresets["centerMarker"];
+      this.containerMap.appendChild(centerMarker);
+      this.centerMarker = centerMarker;
+      console.debug(this.centerMarker);
+    } catch (e) {
+      console.error("Ошибка при добавлении центральной метки:", e);
+    }
+  }
+
+  @checkMapInstance
+  centerMapByCords(cords, zoom = 15) {
+    try {
+      this.instance.setCenter(cords, zoom);
+    } catch (e) {
+      console.error(e);
+    }
   }
 
   @checkMapInstance
