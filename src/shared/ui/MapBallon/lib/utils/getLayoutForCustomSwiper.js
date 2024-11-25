@@ -1,5 +1,3 @@
-import "swiper/css/bundle";
-
 /**
  * Рендер и инициализация Swiper
  * @param {string} containerSelector - Селектор контейнера, куда вставить слайдер
@@ -18,7 +16,7 @@ export const getLayoutForCustomSwiper = ({ info }) => {
               <img src="${image}" alt="Swiper image" />
             </div>`;
     })
-    .join();
+    .join("");
 
   return `
     <div class="swiper">

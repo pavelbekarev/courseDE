@@ -94,7 +94,9 @@ export class YandexMap {
 
       if (swiperEl && swiperPagination) {
         new Swiper(swiperEl, {
+          loop: true,
           slidesPerView: 1,
+          spaceBetween: 0,
           direction: "horizontal",
           modules: [Pagination],
           pagination: {

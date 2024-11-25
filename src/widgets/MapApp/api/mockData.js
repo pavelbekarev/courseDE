@@ -56,11 +56,9 @@ export const marksDetailMockResponse = [
     comment:
       "Хороший бар и караоке, по средам у них специальные акции с коктейлями",
     images: [
-      "/assets/marksDetail/image1.png",
-      "/assets/marksDetail/image2.png",
-      "/assets/marksDetail/image3.png",
-      "/assets/marksDetail/image4.png",
-      "/assets/marksDetail/image5.png",
+      "/assets/marksDetail/image6.png",
+      "/assets/marksDetail/image6.png",
+      "/assets/marksDetail/image6.png",
       "/assets/marksDetail/image6.png",
     ],
   },
