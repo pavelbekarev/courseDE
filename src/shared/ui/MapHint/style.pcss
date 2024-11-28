@@ -1,0 +1,31 @@
+.mapHint {
+  --mapHintWidth: 54rem;
+  --mapHintHeight: 25.25rem;
+  --mapHintBorderRadius: 2rem;
+  position: absolute;
+  top: calc(var(--yandexMapBallonLayoutMinHeight) * 2);
+  left: calc(var(--yandexMapBallonLayoutWidth) * 1.5);
+  width: var(--mapHintWidth);
+  height: var(--mapHintHeight);
+  background-color: rgba(0,0,0, .4);
+  border-radius: var(--mapHintBorderRadius);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+  padding: 4rem 6rem;
+
+  &__text {
+    font-size: 2.5rem;
+    color: #fff;
+  }
+
+  &--active {
+    display: flex;
+  }
+
+  &--hide {
+    display: none;
+  }
+}

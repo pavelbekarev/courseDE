@@ -8,6 +8,7 @@ import {
 } from "../config/constants.js";
 import { checkMapInstance } from "../config/lib/checkMapInstance.js";
 import { getExternalScript } from "#shared/lib/utils/index";
+import { MapHint } from "#shared/ui/MapHint/index";
 /**
  *
  */
@@ -140,7 +141,13 @@ export class YandexMap {
         suppressMapOpenBlock: true,
       }
     );
-    this.addCenterMarker();
+    this.showHint();
+
+    setTimeout(() => {
+      this.hideHint();
+      this.addCenterMarker();
+    }, 5000);
+
     this.#bindEvents();
     return this.instance;
   }
@@ -243,6 +250,26 @@ export class YandexMap {
     } catch (e) {
       console.error("Ошибка при добавлении центральной метки:", e);
     }
+  }
+
+  @checkMapInstance
+  showHint() {
+    try {
+      const mapHintLayout = document.createElement("div");
+      mapHintLayout.className = "mapHint";
+      mapHintLayout.setAttribute("data-js-mapHint", "mapHint");
+      mapHintLayout.innerHTML = MapHint();
+
+      this.containerMap.appendChild(mapHintLayout);
+    } catch (e) {
+      console.error("Подсказка не была инициализирована", e);
+    }
+  }
+
+  @checkMapInstance
+  hideHint() {
+    const mapHintElement = document.querySelector("[data-js-mapHint]");
+    mapHintElement.remove();
   }
 
   @checkMapInstance
