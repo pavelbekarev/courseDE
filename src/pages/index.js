@@ -1,3 +1,4 @@
+import { PlaceSwitchGroup } from "#features/PlaceSwitchGroup/index";
 import { Search } from "#shared/ui/Search/ui/Search.js";
 
 /**
@@ -18,7 +19,7 @@ const IndexPage = () => `
       </header>
       <main>
         ${Search({ selectorId: "searchAddress" })}
-        <!-- Filters --!>
+        ${PlaceSwitchGroup()}
         <div id="map1" class="yandexMap"></div>
       </main>
     </body>

@@ -15,7 +15,7 @@ export const filterCfg = {
       isChecked: false,
       isDisabled: false,
     },
-    trk: {
+    music: {
       value: null,
       isChecked: false,
       isDisabled: false,
@@ -38,7 +38,7 @@ export const listMarksMockResponse = {
     { id: "1", type: "Bar", cords: [53.5, 60.9] },
     { id: "2", type: "Restaurant", cords: [54.5, 57.9] },
     { id: "3", type: "Cinema", cords: [53.5, 57.9] },
-    { id: "4", type: "Theater", cords: [52.5, 57.9] },
+    { id: "4", type: "Theatre", cords: [52.5, 57.9] },
     { id: "5", type: "Music", cords: [51.5, 57.9] },
   ],
 };

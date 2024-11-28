@@ -34,6 +34,9 @@ export class YandexMap {
     this.iconsPresets = iconsPresets;
     this.classNames = classNames ?? defaultClassNames;
     this.iconShageConfig = iconShapeConfig ?? defaultIconShapeConfig;
+    this.attrs = {
+      ballon: "data-js-ballon",
+    };
   }
 
   getBallonLayout() {
@@ -57,8 +60,8 @@ export class YandexMap {
   }
 
   getBallonContent({ id, children }) {
+    const linkCreateSwiperFn = this.createSwiperForBallon;
     if (window.ymaps) {
-      const linkCreateSwiperFn = this.createSwiperForBallon;
       const ballonContent = window.ymaps.templateLayoutFactory.createClass(
         `<div class="${this.classNames.ballonContent}" data-js-ballon=${id}>
           ${children}
@@ -252,7 +255,13 @@ export class YandexMap {
   }
 
   @checkMapInstance
+  clearMap() {
+    this.instance.geoObjects.removeAll();
+  }
+
+  @checkMapInstance
   renderMarks(marks) {
+    this.clearMap(); //очистка перед рендером
     marks.forEach((mark) => {
       this.addMark({
         id: mark.id,

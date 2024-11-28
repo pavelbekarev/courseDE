@@ -1,6 +1,5 @@
+import { FilterManager } from "#features/Filter/model/index";
 import { API_ENDPOINTS } from "#shared/config/constants";
-import { getDebouncedFn } from "#shared/lib/utils/index";
-import { FilterManager } from "#shared/ui/Filter/model/index.js";
 import { yandexMapCustomEventNames } from "#shared/ui/Map/config/constants";
 import { YandexMap } from "#shared/ui/Map/model";
 import { MapBallon } from "#shared/ui/MapBallon/ui/MapBallon";
@@ -13,13 +12,6 @@ export class MapApp {
     this.storeService = storeService;
     this.apiGeoUrl = "https://geocode-maps.yandex.ru/1.x/?apikey";
     this.apiKey = "b4a559eb-311c-4123-8025-480ecdc62549";
-    this.inputAddress = document.querySelector("#searchAddress"); //TODO: вынести в фильтр.
-    console.debug(this.inputAddress, "!!!");
-
-    this.debouncedHandleMapByAddress = getDebouncedFn(
-      this.handleCenterMapByAddress,
-      1000
-    ).bind(this);
 
     this.yandexMap = new YandexMap({
       containerSelector: "#map1",
@@ -30,16 +22,17 @@ export class MapApp {
       zoom: 10,
     });
 
-    this.loadAndUpdateFilters(); //подгружаем инфу по конфигу фильтров
     this.filterManager = new FilterManager({
-      containerSelector: `[data-js-filter="1"]`,
-      onUpdate: this.handleFilterChanged,
+      filterName: `marks`,
+      onUpdate: (changedData) => this.handleFilterChanged(changedData),
     });
 
+    this.filterManager.applyFilters(this.storeService.getFilters()); //Применяем фильтры из стора
+    this.loadAndUpdateFilters(); //подгружаем инфу по конфигу фильтров
     this.yandexMap
       .initMap()
       .then(async () => {
-        this.yandexMap.renderMarks(this.storeService.getMarkers()); //Рендерим метки из стора
+        this.yandexMap.renderMarks(this.getFilteredMarkers()); //Рендерим метки из стора по фильтрам
         const marks = await this.getMarks();
         this.storeService.updateStore("setMarkers", marks);
       })
@@ -47,14 +40,17 @@ export class MapApp {
 
     this.#bindYandexMapEvents();
     this.subscribeForStoreService();
-    this.#bindEvents();
   }
 
   handleFilterChanged(changeData) {
-    console.debug(
-      "Здесь я буду обращаться к стору и обновлять его данные активных фильтров",
-      changeData
-    );
+    //TODO: есть замечение, касательно того, что мы всегда подвязываемся к полю inputs, а если у нас будет несколько фильтров? Нужно будет подумать над этим.
+    //Тут же необходимо делать проверку если менялось поле ввода адреса и центрировать карту
+    if (changeData.search) {
+      this.handleCenterMapByAddress(changeData.search.value);
+    }
+    const currentState = this.storeService.getFilters().inputs;
+    const updatedState = { ...currentState, ...changeData };
+    this.storeService.updateStore("setFilters", { inputs: updatedState });
   }
 
   loadAndUpdateFilters() {
@@ -67,6 +63,19 @@ export class MapApp {
         console.error("Ошибка при получении конфигурации фильтров:", error);
       }
     })();
+  }
+
+  getFilteredMarkers() {
+    // Получаем активные фильтры из состояния хранилища
+    const activeFilters = this.storeService.getFilters().inputs;
+
+    // Фильтруем метки, оставляем только те, для которых фильтры включены (isChecked: true)
+    const filteredMarkers = this.storeService.getMarkers().filter((marker) => {
+      // Проверяем, включен ли фильтр для типа метки
+      return activeFilters[marker.type]?.isChecked;
+    });
+
+    return filteredMarkers;
   }
 
   async getFiltersCfg() {
@@ -87,7 +96,9 @@ export class MapApp {
     } = e;
 
     try {
-      const res = await this.apiClient.get(API_ENDPOINTS.marks.detail, id);
+      const res = await this.apiClient.get(API_ENDPOINTS.marks.detail, {
+        id: id,
+      });
 
       const layout = MapBallon({ ballonId: id, type: type, info: res });
       this.yandexMap.updateCustomBallon(id, mark, layout);
@@ -98,11 +109,11 @@ export class MapApp {
 
   handleMarkersChangedInStore() {
     console.debug("markers changed", this.storeService.getMarkers());
-    this.yandexMap.renderMarks(this.storeService.getMarkers());
+    // this.yandexMap.renderMarks(this.storeService.getMarkers());
   }
 
   handleFiltersChangedInStore() {
-    console.debug("filters changed", this.storeService.getFilters());
+    this.yandexMap.renderMarks(this.getFilteredMarkers());
   }
 
   subscribeForStoreService() {
@@ -145,13 +156,5 @@ export class MapApp {
         this.handleMarkerClick(e);
       }
     );
-  }
-
-  //TODO: переписать на фильтры
-  #bindEvents() {
-    if (this.inputAddress)
-      this.inputAddress.addEventListener("input", (e) => {
-        this.debouncedHandleMapByAddress(e.target.value);
-      });
   }
 }
