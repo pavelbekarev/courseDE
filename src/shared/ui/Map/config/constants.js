@@ -33,7 +33,7 @@ export const typeNamesRus = {
   ["Bar"]: "Бар",
   ["Music"]: "Ночной клуб",
   ["Restaurant"]: "Ресторан",
-  ["Theater"]: "Театр",
+  ["Theatre"]: "Театр",
   ["Cinema"]: "Кинотеатр",
 };
 

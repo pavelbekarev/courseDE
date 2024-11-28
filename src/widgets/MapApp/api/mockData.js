@@ -105,7 +105,7 @@ export const marksDetailMockResponse = [
   {
     id: "4",
     title: "Театр «Капоне»",
-    type: "Theater",
+    type: "Theatre",
     address: {
       city: "Челябинск 4",
       house: "14a",

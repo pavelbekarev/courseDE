@@ -40,7 +40,7 @@ export const PlaceSwitchGroup = ({
   return `
     <div class="placeSwitchGroup ${extraClasses.join(" ")}" ${getGeneratedAttrs(extraAttrs)}>
       <div data-js-filter="marks">
-        <input type="text" name="search" data-js-filter-item="search" data-js-filter-parent-name="marks" />
+        <!--<input type="text" name="search" data-js-filter-item="search" data-js-filter-parent-name="marks" />-->
         ${switchElements}
       </div>
     </div>
