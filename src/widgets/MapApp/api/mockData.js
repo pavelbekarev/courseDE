@@ -5,27 +5,27 @@ export const filterCfg = {
       isChecked: "null",
       isDisabled: "null",
     },
-    bars: {
+    Bar: {
       value: null,
       isChecked: false,
       isDisabled: false,
     },
-    restaurant: {
+    Restaurant: {
       value: null,
       isChecked: false,
       isDisabled: false,
     },
-    music: {
+    Music: {
       value: null,
       isChecked: false,
       isDisabled: false,
     },
-    theatre: {
+    Theatre: {
       value: null,
       isChecked: false,
       isDisabled: false,
     },
-    cinema: {
+    Cinema: {
       value: null,
       isChecked: false,
       isDisabled: false,

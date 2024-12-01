@@ -1,8 +1,10 @@
 import { getLayoutForCustomSwiper } from "../lib/index.js";
+import { DeleteMarkButton } from "#features/Marks/DeleteMark/index.js";
 import { Button } from "#shared/ui/Button/index";
-import { EditIcon, DeleteIcon } from "#shared/ui/Icons/index";
+import { EditIcon } from "#shared/ui/Icons/index";
 import { iconsPresets, typeNamesRus } from "#shared/ui/Map/config/constants.js";
 import { Title } from "#shared/ui/Title/ui/Title";
+
 import "swiper/css/bundle";
 /**
  *
@@ -30,8 +32,8 @@ export const MapBallon = ({
     <p class="yandexMap__ballonContent__address">${info.data.address.street}</p>
     <p class="yandexMap__ballonContent__comment">${info.data.comment}</p>
     <div class="yandexMap__ballonContent__interactiveControls">
-      ${Button({ text: "Редактировать", icon: EditIcon() })}
-      ${Button({ icon: DeleteIcon({ iconColor: "var(--colorDelete)" }) })}
+      ${Button({ text: "Редактировать", icon: EditIcon(), extraAttrs: [{ name: "data-js-button", value: "editButton" }] })}
+      ${DeleteMarkButton({ markId: ballonId })}
     </div>
-    `;
+  `;
 };

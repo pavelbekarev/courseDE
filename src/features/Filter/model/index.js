@@ -65,22 +65,35 @@ export class FilterManager {
       return;
     }
 
-    const changeData = {
-      value:
-        target.type === "checkbox" || target.type === "radio"
-          ? null
-          : target.value, // Для чекбоксов и радио кнопок значение null
-      isChecked:
-        target.type === "checkbox" || target.type === "radio"
-          ? target.checked // Для чекбоксов и радио кнопок состояние checked
-          : false,
-      isDisabled: target.disabled || false, // Если элемент отключен
+    const changeData = () => {
+      switch (target.type) {
+        case "checkbox":
+          return {
+            value: null,
+            isChecked: target.checked,
+            isDisabled: target.disabled || false,
+          };
+
+        case "radio":
+          return {
+            value: null,
+            isChecked: target.checked,
+            isDisabled: target.disabled || false,
+          };
+
+        default:
+          return {
+            value: target.value,
+            isChecked: false,
+            isDisabled: target.disabled || false,
+          };
+      }
     };
 
-    console.debug("Обработано изменение фильтра:", changeData);
+    console.debug("Обработано изменение фильтра:", changeData());
 
     // Оповещаем о произошедших изменениях
-    this.#notifyChange({ [filterName]: changeData });
+    this.#notifyChange({ [filterName]: changeData() });
   }
 
   applyFilters(filtersCfg) {

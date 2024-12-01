@@ -1,5 +1,7 @@
 import "./styles.js";
+import { DeleteMarkModel } from "#features/Marks/DeleteMark/model/index.js";
 import { API_URL } from "#shared/config/constants";
+import { ModalManager } from "#shared/lib/plugins/modalManager.js";
 import { ApiClient } from "#shared/lib/services/ApiClient.js";
 import { StoreService } from "#shared/lib/services/StoreService.js";
 import { ChoiceSelectModel } from "#shared/ui/CustomSelect/model/index.js";
@@ -31,4 +33,5 @@ Promise.all([initMSW(), domReady()]).then(() => {
   new ChoiceSelectModel();
   window.App.ChoiceSelectModel = ChoiceSelectModel;
   new MapApp(new StoreService("mapAppStore"), new ApiClient(API_URL));
+  new DeleteMarkModel();
 });

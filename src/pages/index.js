@@ -1,3 +1,4 @@
+import { ModalWindow } from "../shared/ui/ModalWindow/ui/index.js";
 import { PlaceSwitchGroup } from "#features/PlaceSwitchGroup/index";
 import { Search } from "#shared/ui/Search/ui/Search.js";
 
@@ -18,10 +19,18 @@ const IndexPage = () => `
         <h1>Welcome to the Home Page</h1>
       </header>
       <main>
+        ${ModalWindow()}
         ${Search({ selectorId: "searchAddress" })}
         ${PlaceSwitchGroup()}
         <div id="map1" class="yandexMap"></div>
       </main>
+
+      <div id="modalSuccess">
+          <p>Успешно!</p>
+      </div>
+      <div id="modalError">
+          <p>Не успешно!</p>
+      </div>
     </body>
   </html>
 `;
