@@ -1,4 +1,5 @@
 import { Fancybox } from "@fancyapps/ui";
+import { ConfirmModal } from "#features/ConfirmModal/index";
 
 /**
  * Класс для управления модальными окнами с использованием Fancybox (Singleton).
@@ -46,16 +47,7 @@ export class ModalManager {
     onConfirm = () => {},
     onCancel = () => {},
   } = {}) {
-    //TODO: можно вынести в shared/ui/ConfirmModal
-    const content = `
-      <div class="confirmModal">
-        <p>${message}</p>
-        <div class="modal-buttons">
-          <button data-js-confirm-btn class="btn btn--isConfirm">Да</button>
-          <button data-js-cancel-btn class="btn btn--isCancel">Нет</button>
-        </div>
-      </div>
-    `;
+    const content = ConfirmModal({ message });
 
     Fancybox.show([{ src: content, type: "html" }], {
       ...this.defaultOptions,
