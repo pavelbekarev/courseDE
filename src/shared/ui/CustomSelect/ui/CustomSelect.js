@@ -14,7 +14,7 @@ export const CustomSelect = ({
   extraClasses = [],
 } = {}) => {
   return `
-    <select data-js-custom-select='${JSON.stringify(cfg)}' class='customSelect ${extraClasses.join(" ")}' ${getGeneratedAttrs(extraAttrs)}>
+    <select data-js-custom-select='${JSON.stringify(cfg)}' class='customSelect ${extraClasses.join(" ")}' ${getGeneratedAttrs(extraAttrs)} >
     </select>
   `;
 };

@@ -3,8 +3,8 @@
  */
 export const Title = ({ text = "", extraClasses = [], extraAttrs = [] }) => {
   return `
-    <h1 class="title">
+    <h3 class="title ${extraClasses.join(" ")}">
       ${text}
-    </h1>
+    </h3>
   `;
 };

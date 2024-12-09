@@ -23,6 +23,18 @@ const IndexPage = () => `
         </div>
         <div id="map1" class="yandexMap"></div>
       </main>
+
+      <form>
+      </form>
+
+      <div class="modalContainer">
+        <div class="modalSuccess" id="modalSuccess">
+            <p>Успешно!</p>
+        </div>
+        <div class="modalError" id="modalError">
+          <p>Не успешно!</p>
+        </div>
+      </div>
     </body>
   </html>
 `;

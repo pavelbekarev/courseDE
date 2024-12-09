@@ -49,7 +49,7 @@ export const marksDetailMockResponse = [
     title: "Al Capone",
     type: "Bar",
     address: {
-      city: "Челябинск 1",
+      city: "Челябинск",
       house: "11a",
       street: "ул. Братьев Кашириных 1",
     },
@@ -67,7 +67,7 @@ export const marksDetailMockResponse = [
     title: "Al Capone Bistro",
     type: "Restaurant",
     address: {
-      city: "Челябинск 2",
+      city: "Челябинск",
       house: "12a",
       street: "ул. Братьев Кашириных 2",
     },
@@ -87,7 +87,7 @@ export const marksDetailMockResponse = [
     title: "Al Capone Cinema",
     type: "Cinema",
     address: {
-      city: "Челябинск 3",
+      city: "Челябинск",
       house: "13a",
       street: "ул. Братьев Кашириных 3",
     },
@@ -107,7 +107,7 @@ export const marksDetailMockResponse = [
     title: "Театр «Капоне»",
     type: "Theatre",
     address: {
-      city: "Челябинск 4",
+      city: "Челябинск",
       house: "14a",
       street: "ул. Братьев Кашириных 4",
     },
@@ -127,7 +127,7 @@ export const marksDetailMockResponse = [
     title: "Al Capone Night Club",
     type: "Music",
     address: {
-      city: "Челябинск 5",
+      city: "Челябинск",
       house: "15a",
       street: "ул. Братьев Кашириных 5",
     },

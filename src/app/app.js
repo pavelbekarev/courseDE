@@ -1,7 +1,8 @@
 import "./styles.js";
 import { DeleteMarkModel } from "#features/Marks/DeleteMark/model/index.js";
+import { UpdateMarkModel } from "#features/Marks/UpdateMark/model/index.js";
 import { API_URL } from "#shared/config/constants";
-import { ModalManager } from "#shared/lib/plugins/modalManager.js";
+import { FormHandler } from "#shared/lib/plugins/formHandler.js";
 import { ApiClient } from "#shared/lib/services/ApiClient.js";
 import { StoreService } from "#shared/lib/services/StoreService.js";
 import { ChoiceSelectModel } from "#shared/ui/CustomSelect/model/index.js";
@@ -29,27 +30,17 @@ function domReady() {
 }
 
 Promise.all([initMSW(), domReady()]).then(() => {
+  document.addEventListener("submit", (e) => {
+    e.preventDefault();
+  });
+
   window.App = {};
   new ChoiceSelectModel();
   window.App.ChoiceSelectModel = ChoiceSelectModel;
   window.App.StoreServiceForMap = new StoreService("mapAppStore");
   new MapApp(window.App.StoreServiceForMap, new ApiClient(API_URL));
   new DeleteMarkModel(window.App.StoreServiceForMap);
-  // new UpdateMarkModel(window.App.StoreServiceForMap);
+  new UpdateMarkModel(window.App.StoreServiceForMap);
 
-  // setTimeout(() => {
-  //   const modalManager = ModalManager.getInstance({
-  //     animationClass: "slide",
-  //     overlayColor: "rgba(0, 0, 0, 0.8)",
-  //   });
-  //   modalManager.open("#modalSuccess", { type: "inline" });
-  //   modalManager.open("#modalError", { type: "inline" });
-  //   modalManager.open("<p>Привет, мир!</p>");
-  //   modalManager.closeAll();
-  //   modalManager.openConfirmModal({
-  //     message: "Вы уверены?",
-  //     onConfirm: () => console.debug("Подтверждено!"),
-  //     onCancel: () => console.debug("Отменено!"),
-  //   });
-  // }, 1000);
+  new FormHandler();
 });

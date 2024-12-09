@@ -94,11 +94,13 @@ export class MapApp {
     const {
       detail: { id, type, mark },
     } = e;
+    console.debug(id);
 
     try {
       const res = await this.apiClient.get(API_ENDPOINTS.marks.detail, {
-        id: id,
+        id,
       });
+      console.debug("res!!!!", res.data);
 
       const layout = MapBallon({ ballonId: id, type: type, info: res });
       this.yandexMap.updateCustomBallon(id, mark, layout);

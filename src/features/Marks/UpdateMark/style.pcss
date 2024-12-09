@@ -1,0 +1,94 @@
+.updateModalContent {
+  --updateModalContentMinWidth: 70rem;
+  --updateModalContentBorderRadius: 2rem;
+  --updateModalContentTextFontSize: 1.75rem;
+  --updateModalContentMarkTypeLayoutTextWidth: 60%;
+  --updateModalContentPadding: 0 2rem;
+  position: relative;
+  min-width: var(--updateModalContentMinWidth);
+  border-radius: var(--updateModalContentBorderRadius);
+
+  
+
+  &__cancelBtn {
+    color: var(--colorImperialRed) !important;
+  }
+
+  [data-fancybox-close] {
+    position: absolute !important;
+    top: 2rem !important;
+    right: 2rem !important;
+    color: #000;
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    width: 100%;
+    margin-top: 8rem;
+    margin-bottom: 4rem;
+
+    &__titlePadding {
+      padding: var(--updateModalContentPadding);
+    }
+
+    &__address {
+      font-size: var(--updateModalContentTextFontSize);
+      padding: var(--updateModalContentPadding);
+    }
+  
+    &__markTypeLayout {
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      gap: 2rem;
+      align-items: center;
+      padding: var(--updateModalContentPadding);
+
+      &__text {
+        width: var(--updateModalContentMarkTypeLayoutTextWidth);
+        font-size: var(--updateModalContentTextFontSize);
+      }
+
+      .customSelect {
+        width: 100%;
+      }
+    }
+
+    &__commentLayout {
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      gap: 2rem;
+      align-items: center;
+      padding: var(--updateModalContentPadding);
+      
+      &__comment {
+        width: var(--updateModalContentMarkTypeLayoutTextWidth);
+        font-size: var(--updateModalContentTextFontSize);
+      }
+
+      &__input {
+        display: flex;
+        padding: 2rem;
+        height: 14.5rem;
+        outline: none;
+        border: none;
+        border-radius: var(--updateModalContentBorderRadius);
+        width: 100%;
+        background-color: var(--colorAntiFlashWhite);
+      }
+    }
+
+    &__controls {
+      display: flex;
+      flex-direction: row;
+      width: 100%;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 15rem;
+      padding: var(--updateModalContentPadding);
+    }
+  }
+}

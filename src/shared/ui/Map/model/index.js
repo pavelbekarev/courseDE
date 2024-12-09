@@ -7,7 +7,6 @@ import {
   iconShapeConfig as defaultIconShapeConfig,
 } from "../config/constants.js";
 import { checkMapInstance } from "../config/lib/checkMapInstance.js";
-import { DeleteMarkBtn } from "#features/Marks/DeleteMark/index.js";
 import { getExternalScript } from "#shared/lib/utils/index";
 import { MapHint } from "#shared/ui/MapHint/index";
 /**
