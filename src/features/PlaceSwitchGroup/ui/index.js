@@ -18,7 +18,6 @@ export const PlaceSwitchGroup = ({
   const switchElements = switchConfig
     .map(
       ({ label, name, checked, dataJsFilterItem, dataJsFilterParentName }) => {
-        console.debug(checked);
         return `
         ${Switch({
           label: label,
@@ -39,8 +38,7 @@ export const PlaceSwitchGroup = ({
 
   return `
     <div class="placeSwitchGroup ${extraClasses.join(" ")}" ${getGeneratedAttrs(extraAttrs)}>
-      <div data-js-filter="marks">
-        <input type="text" name="search" data-js-filter-item="search" data-js-filter-parent-name="marks" />
+      <div class="placeSwitchGroup__marksLayout" data-js-filter="marks">
         ${switchElements}
       </div>
     </div>

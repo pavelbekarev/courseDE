@@ -109,7 +109,7 @@ export class MapApp {
 
   handleMarkersChangedInStore() {
     console.debug("markers changed", this.storeService.getMarkers());
-    // this.yandexMap.renderMarks(this.storeService.getMarkers());
+    this.yandexMap.renderMarks(this.getFilteredMarkers());
   }
 
   handleFiltersChangedInStore() {

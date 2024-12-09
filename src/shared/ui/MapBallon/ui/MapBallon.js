@@ -20,7 +20,6 @@ export const MapBallon = ({
   const typeIcon = iconsPresets[type];
 
   const customSwiperLayout = getLayoutForCustomSwiper({ info: info });
-
   return `
     ${customSwiperLayout}
     ${Title({ text: info.data.title, extraClasses: ["yandexMap__ballonContent__title"] })}

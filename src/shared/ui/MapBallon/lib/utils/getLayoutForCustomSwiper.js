@@ -9,7 +9,6 @@
  * @return {string} HTML-шаблон
  */
 export const getLayoutForCustomSwiper = ({ info }) => {
-  console.debug("info!!! ", info);
   const sliders = info.data.images
     .map((image) => {
       return `<div class="swiper-slide">

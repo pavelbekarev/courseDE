@@ -7,33 +7,41 @@ import { getAttr } from "#shared/lib/utils";
  */
 export class DeleteMarkModel {
   static selectors = {
-    deleteMarkBtn: "[data-js-delete-mark-btn]",
+    ballon: "[data-js-ballon]",
+    deleteMarkButton: "[data-js-delete-mark-btn]",
   };
 
-  constructor() {
+  constructor(storeService) {
+    this.storeService = storeService;
     this.#bindEvents();
   }
 
   handleDeleteMark = (event) => {
     const button = event.target.closest(
-      DeleteMarkModel.selectors.deleteMarkBtn
+      DeleteMarkModel.selectors.deleteMarkButton
     );
+    console.debug(button);
 
     if (!button) {
       return;
     }
 
     const markId = button.getAttribute(
-      getAttr(DeleteMarkModel.selectors.deleteMarkBtn)
+      getAttr(DeleteMarkModel.selectors.deleteMarkButton)
     );
 
     if (!markId) {
       return;
     }
+    console.debug(markId);
 
     const handleDelete = async () => {
       try {
         await deleteMark(markId); // Попытка удалить метку через API
+        this.storeService.updateStore(
+          "setMarkers",
+          this.storeService.getMarkers().filter((item) => item.id !== markId)
+        );
       } catch (error) {
         console.error("Ошибка при удалении метки:", error);
       }
@@ -46,7 +54,7 @@ export class DeleteMarkModel {
         ModalManager.getInstance().closeAll();
       },
       onCancel: () => {
-        ModalManager.closeAll();
+        ModalManager.getInstance().closeAll();
       },
     });
   };

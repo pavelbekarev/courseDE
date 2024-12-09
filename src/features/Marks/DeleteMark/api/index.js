@@ -1,5 +1,6 @@
 import { API_ENDPOINTS } from "#shared/config/constants";
 import { ApiClient } from "#shared/lib/services/ApiClient";
+
 /**
  * Функция для отправки запроса на удаление метки
  * @param {string} markId - id метки

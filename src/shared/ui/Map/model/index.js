@@ -7,6 +7,7 @@ import {
   iconShapeConfig as defaultIconShapeConfig,
 } from "../config/constants.js";
 import { checkMapInstance } from "../config/lib/checkMapInstance.js";
+import { DeleteMarkBtn } from "#features/Marks/DeleteMark/index.js";
 import { getExternalScript } from "#shared/lib/utils/index";
 import { MapHint } from "#shared/ui/MapHint/index";
 /**
@@ -90,8 +91,6 @@ export class YandexMap {
         `[data-js-ballon="${ballonId}"]`
       );
 
-      console.debug(ballonContainer);
-
       const swiperEl = ballonContainer.querySelector(".swiper");
       const swiperPagination =
         ballonContainer.querySelector(".swiper-pagination");
@@ -141,6 +140,7 @@ export class YandexMap {
         suppressMapOpenBlock: true,
       }
     );
+
     this.showHint();
 
     setTimeout(() => {
