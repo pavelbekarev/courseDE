@@ -98,6 +98,11 @@ export class FilterManager {
 
   applyFilters(filtersCfg) {
     //TODO: опять подвязка на inputs. Нужно подумать над этим
+    if (!filtersCfg.inputs) {
+      console.warn("Не переданы данные фильтров.");
+      return;
+    }
+
     const { inputs } = filtersCfg;
     Object.entries(inputs).forEach(([name, data]) => {
       const filterItem = document.querySelector(

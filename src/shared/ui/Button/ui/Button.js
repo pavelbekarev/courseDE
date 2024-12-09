@@ -12,7 +12,7 @@ export const Button = ({
   extraAttrs = [],
 }) => {
   return `
-    <button class="button ${text ? "button--isText" : ""}" ${getGeneratedAttrs(extraAttrs)}>
+    <button class="button ${text ? "button--isText" : ""}" ${getGeneratedAttrs(extraAttrs)} >
       <label class="button__icon ${extraClasses.join(" ")}">
         ${icon}
       </label>
