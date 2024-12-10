@@ -1,8 +1,8 @@
 .confirmModal {
-  color: var(--colorBlack);
+  --confirmModalTextFontSize: 2rem;
 
   &__title {
-    font-size: 2rem;
+    font-size: var(--confirmModalTextFontSize);
     color: #000;
   }
 
@@ -11,15 +11,17 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
+
+    /* stylelint-disable-next-line selector-class-pattern */
+    &--isGreenLightIcon {
+      color: var(--colorSuccess) !important;
+    }
+
+    /* stylelint-disable-next-line selector-class-pattern */
+    &--isRedIcon {
+      color: var(--colorDismiss) !important;
+    }
+
   }
 }
 
-/* stylelint-disable-next-line selector-class-pattern */
-.btn--isGreenLightIcon {
-  color: var(--colorSuccess) !important;
-}
-
-/* stylelint-disable-next-line selector-class-pattern */
-.btn--isRedIcon {
-  color: var(--colorDismiss) !important;
-}

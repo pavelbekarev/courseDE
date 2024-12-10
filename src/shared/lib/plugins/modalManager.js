@@ -74,6 +74,7 @@ export class ModalManager {
           }
         },
       },
+      closeButton: false,
     });
   }
 

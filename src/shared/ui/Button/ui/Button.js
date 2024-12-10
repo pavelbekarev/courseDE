@@ -14,7 +14,7 @@ export const Button = ({
 }) => {
   return `
     <button class="button ${text ? "button--isText" : ""}" ${getGeneratedAttrs(extraAttrs)} >
-      <label class="button__icon" ${extraClasses.join(" ")}>
+      <label class="button__icon ${icon ? "" : "button__icon--empty"} ${extraClasses.join(" ")}"}>
         ${icon}
       </label>
       <span class="button__text ${textColor ? textColor : ""}">
